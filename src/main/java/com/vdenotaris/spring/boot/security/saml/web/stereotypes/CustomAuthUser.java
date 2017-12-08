@@ -1,16 +1,41 @@
 package com.vdenotaris.spring.boot.security.saml.web.stereotypes;
 
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.stereotype.Component;
 
 import java.util.Collection;
-
-public class InMemoryAuthUser extends User {
+@Component
+public class CustomAuthUser {
     private String emailId;
+    private String username;
+    private Collection<? extends GrantedAuthority> authorities;
 
+    public CustomAuthUser(String emailId, String username, Collection<? extends GrantedAuthority> authorities) {
+        this.emailId = emailId;
+        this.username = username;
+        this.authorities = authorities;
+    }
 
-    public InMemoryAuthUser(String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities, String emailId) {
-        super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
+    public CustomAuthUser() {
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
+        this.authorities = authorities;
+    }
+
+    public void setEmailId(String emailId) {
         this.emailId = emailId;
     }
 

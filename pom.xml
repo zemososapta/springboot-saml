@@ -13,22 +13,7 @@
 	<description>Currently Spring Security SAML module doesn't provide a starter for Spring Boot. Moreover, its configuration is XML-based as of this writing. The aim of this project is to explain how to develop a Service Provider (SP) which uses Spring Boot and Spring Security SAML Extension, by defining an annotation-based configuration (Java Configuration). Thymeleaf is also used as template engine.</description>
 	<url>https://github.com/vdenotaris/spring-boot-security-saml-sample</url>
 	
-	<developers>
-		<developer>
-			<id>vdenotaris</id>
-			<name>Vincenzo De Notaris</name>
-			<email>dev@vdenotaris.com</email>
-			<timezone>+1</timezone>
-		</developer>
-	</developers>
-	<contributors>
-		<contributor>
-			<name>Vladimír Schäfer</name>
-		</contributor>
-		<contributor>
-			<name>Alexey Syrtsev</name>
-		</contributor>	
-	</contributors>	
+
 	
 	<licenses>
 		<license>
@@ -49,7 +34,7 @@
 	<parent>
 	    <groupId>org.springframework.boot</groupId>
 	    <artifactId>spring-boot-starter-parent</artifactId>
-	    <version>1.5.7.RELEASE</version>
+	    <version>1.5.9.RELEASE</version>
 	</parent>
 
 	<dependencies>
@@ -62,6 +47,12 @@
 					<artifactId>spring-boot-starter-logging</artifactId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.0.1</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 		    <groupId>org.springframework.boot</groupId>
@@ -82,20 +73,32 @@
 		<dependency>
         	<groupId>org.springframework.boot</groupId>
         	<artifactId>spring-boot-starter-tomcat</artifactId>
-        	<scope>provided</scope>
     	</dependency>
 		<dependency>
 			<groupId>org.springframework.security.extensions</groupId>
 			<artifactId>spring-security-saml2-core</artifactId>
 			<version>1.0.2.RELEASE</version>
 		</dependency>
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-web-api</artifactId>
+            <version>6.0</version>
+            <scope>provided</scope>
+        </dependency>
+		<dependency>
+			<groupId>org.apache.geronimo.specs</groupId>
+			<artifactId>geronimo-servlet_3.0_spec</artifactId>
+			<version>1.0</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
-	
-	<scm>
-		<connection>scm:git:git@github.com:vdenotaris/spring-boot-security-saml-sample.git</connection>
-		<url>scm:git:git@github.com:vdenotaris/spring-boot-security-saml-sample.git</url>
-		<developerConnection>scm:git:git@github.com:vdenotaris/spring-boot-security-saml-sample.git</developerConnection>
-	</scm>
+	<repositories>
+		<repository>
+			<id>java.net2</id>
+			<name>Repository hosting the jee6 artifacts</name>
+			<url>http://download.java.net/maven/2</url>
+		</repository>
+	</repositories>
 	
 	<build>
 		<plugins>

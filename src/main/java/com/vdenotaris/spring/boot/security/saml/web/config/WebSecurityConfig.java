@@ -274,7 +274,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     	ExtendedMetadata extendedMetadata = new ExtendedMetadata();
     	extendedMetadata.setIdpDiscoveryEnabled(true); 
     	extendedMetadata.setSignMetadata(false);
-    	extendedMetadata.setEcpEnabled(true);
+    	//extendedMetadata.setEcpEnabled(true);
     	return extendedMetadata;
     }
     
@@ -288,18 +288,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     
 	@Bean
 	@Qualifier("idp-ssocircle")
-	public ExtendedMetadataDelegate ssoCircleExtendedMetadataProvider()
+	public HTTPMetadataProvider ssoCircleHTTPMetadataProvider()
 			throws MetadataProviderException {
 		String idpSSOCircleMetadataURL = "https://idp.ssocircle.com/idp-meta.xml";
 		HTTPMetadataProvider httpMetadataProvider = new HTTPMetadataProvider(
 				this.backgroundTaskTimer, httpClient(), idpSSOCircleMetadataURL);
 		httpMetadataProvider.setParserPool(parserPool());
-		ExtendedMetadataDelegate extendedMetadataDelegate = 
-				new ExtendedMetadataDelegate(httpMetadataProvider, extendedMetadata());
-		extendedMetadataDelegate.setMetadataTrustCheck(true);
-		extendedMetadataDelegate.setMetadataRequireSignature(false);
+//		ExtendedMetadataDelegate extendedMetadataDelegate =
+//				new ExtendedMetadataDelegate(httpMetadataProvider, extendedMetadata());
+//		extendedMetadataDelegate.setMetadataTrustCheck(true);
+//		extendedMetadataDelegate.setMetadataRequireSignature(false);
 		backgroundTaskTimer.purge();
-		return extendedMetadataDelegate;
+		return httpMetadataProvider;
 	}
  
     // IDP Metadata configuration - paths to metadata of IDPs in circle of trust
@@ -309,7 +309,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Qualifier("metadata")
     public CachingMetadataManager metadata() throws MetadataProviderException {
         List<MetadataProvider> providers = new ArrayList<MetadataProvider>();
-        providers.add(ssoCircleExtendedMetadataProvider());
+        providers.add(ssoCircleHTTPMetadataProvider());
         return new CachingMetadataManager(providers);
     }
  
@@ -317,10 +317,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public MetadataGenerator metadataGenerator() {
         MetadataGenerator metadataGenerator = new MetadataGenerator();
-        metadataGenerator.setEntityId("com:vdenotaris:spring:sp");
+        metadataGenerator.setEntityId("ZeSharingMani007");
         metadataGenerator.setExtendedMetadata(extendedMetadata());
-        metadataGenerator.setIncludeDiscoveryExtension(false);
-        metadataGenerator.setKeyManager(keyManager()); 
+//        metadataGenerator.setIncludeDiscoveryExtension(false);
+//        metadataGenerator.setKeyManager(keyManager());
         return metadataGenerator;
     }
  
